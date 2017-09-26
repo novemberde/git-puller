@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Git pull all repository of directory tree from specified directory or current path.",
   "main": "index.js",
+  "bin": {
+    "git-puller": "./index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
