@@ -3,7 +3,21 @@ Git pull all repository of directory tree from specified directory or current pa
 
 # Install
 
+Install command line interface globally.
+
 ```sh
 $ npm install -g git-puller
 ```
 
+# Usage
+
+```sh
+$ git-puller <DirectoryName>
+
+# Example
+$ git-puller .
+```
+
+License
+
+[MIT licensed](./LICENSE).
