@@ -50,7 +50,8 @@ return exec(`ls -d ${directoryName}`)
   }
   console.log();
 
-  let cmdList = [];
+  // Default is specified Directory
+  let cmdList = [`cd ${args[0]} && git fetch && git pull origin`];
 
   for(let i=0; i<directoryList.length; i++) {
     let cmd = "cd ";
