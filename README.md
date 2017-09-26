@@ -15,8 +15,6 @@ $ npm install -g git-puller
 $ git-puller <DirectoryName>
 
 # Example
-$ git-puller .
-# Example
 $ git-puller .  # current directory
 $ git-puller ../../_my_project # other directory
 Execute:  ls -d ../../_my_project/*/
