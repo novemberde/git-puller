@@ -30,6 +30,7 @@ function recursiveGenerator (cmdGen) {
   })
   .catch( err => {
     console.error(err)
+    return recursiveGenerator(cmdGen);
   });
   
 }
