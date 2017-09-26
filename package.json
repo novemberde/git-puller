@@ -1,0 +1,20 @@
+{
+  "name": "git-puller",
+  "version": "1.0.0",
+  "description": "Git pull all repository of directory tree from specified directory or current path.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/novemberde/git-puller.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/novemberde/git-puller/issues"
+  },
+  "homepage": "https://github.com/novemberde/git-puller#readme"
+}
