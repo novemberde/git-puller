@@ -6,7 +6,7 @@ const exec = command => {
   console.log("Execute: ",command)
 
   return new Promise((resolve, reject) => {
-    child_process.exec(command, (err, stdout, stderr) => {
+    return child_process.exec(command, (err, stdout, stderr) => {
       if(err) return reject(stderr, command);
       return resolve(stdout, command);
     });
