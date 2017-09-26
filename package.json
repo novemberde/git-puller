@@ -6,6 +6,9 @@
   "bin": {
     "git-puller": "./index.js"
   },
+  "scripts": {
+    "start": "./index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/novemberde/git-puller.git"

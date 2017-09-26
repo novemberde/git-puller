@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+'use strict';
+
 const child_process = require("child_process");
 const exec = command => {
   console.log("Execute: ",command)
