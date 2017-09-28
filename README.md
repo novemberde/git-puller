@@ -33,5 +33,4 @@ Already up-to-date.
 ```
 
 License
-
 [MIT licensed](./LICENSE).

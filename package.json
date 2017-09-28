@@ -1,6 +1,6 @@
 {
   "name": "git-puller",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Git pull all repository of directory tree from specified directory or current path.",
   "main": "index.js",
   "bin": {
