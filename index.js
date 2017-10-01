@@ -58,7 +58,7 @@ return exec(`ls -d ${directoryName}`)
     let cmd = "cd ";
 
     cmd += directoryList[i];
-    cmd += " && git fetch && git pull origin";
+    cmd += " && git fetch && git pull";
 
     cmdList.push(cmd);
   }
