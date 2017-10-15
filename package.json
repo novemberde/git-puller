@@ -1,10 +1,10 @@
 {
   "name": "git-puller",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Git pull all repository of directory tree from specified directory or current path.",
-  "main": "lib/index.js",
+  "main": "index.js",
   "bin": {
-    "git-puller": "./lib/index.js"
+    "git-puller": "./index.js"
   },
   "repository": {
     "type": "git",
