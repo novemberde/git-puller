@@ -18,7 +18,7 @@ const [
 const targetDirectories = getDirectories(targetPath).concat(targetPath);
 
 targetDirectories.map((targetDirectory) => {
-  const git = simpleGit(path.join(__dirname, targetDirectory));
+  const git = simpleGit(targetDirectory);
   
   git.fetch().pull(remote, branch, (err, update) => {
     if(err) return console.error(err);
