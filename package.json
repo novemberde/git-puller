@@ -1,6 +1,6 @@
 {
   "name": "git-puller",
-  "version": "0.1.9",
+  "version": "0.2.1",
   "description": "Git pull all repository of directory tree from specified directory or current path.",
   "main": "index.js",
   "bin": {
@@ -10,7 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/novemberde/git-puller.git"
   },
-  "keywords": [ "git", "pull", "puller" ],
+  "keywords": [
+    "git",
+    "pull",
+    "puller"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -19,5 +23,8 @@
   "homepage": "https://github.com/novemberde/git-puller#readme",
   "engines": {
     "node": ">=6.0.0"
+  },
+  "dependencies": {
+    "simple-git": "^1.80.1"
   }
 }

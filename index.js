@@ -1,73 +1,31 @@
 #!/usr/bin/env node
 'use strict';
 
-const child_process = require("child_process");
-const exec = command => {
-  console.log("Execute: ",command)
+const { lstatSync, readdirSync } = require('fs')
+const { join } = require('path')
+const simpleGit = require('simple-git')
+const path = require('path')
 
-  return new Promise((resolve, reject) => {
-    return child_process.exec(command, (err, stdout, stderr) => {
-      if(err) return reject(stderr, command);
-      return resolve(stdout, command);
-    });
-  });
-}
-const args = process.argv.slice(2);
+const isDirectory = source => lstatSync(source).isDirectory()
+const getDirectories = source => readdirSync(source).map(name => join(source, name)).filter(isDirectory)
 
-function* generatorFunction (cmdList) {
-  for(let i=0; i<cmdList.length; i++) {
-    yield exec(cmdList[i])
-  }
-}
-function recursiveGenerator (cmdGen) {
-  const genResult = cmdGen.next();
+const [
+  targetPath,
+  remote="origin",
+  branch="master"
+] = process.argv.slice(2);
 
-  if(genResult.done === true) return;
+const targetDirectories = getDirectories(targetPath).concat(targetPath);
 
-  return genResult.value.then( (stdout, command) => {
-    console.log(stdout);
-    return recursiveGenerator(cmdGen);
-  })
-  .catch( err => {
-    console.error(err)
-    return recursiveGenerator(cmdGen);
-  });
+targetDirectories.map((targetDirectory) => {
+  const git = simpleGit(path.join(__dirname, targetDirectory));
   
-}
+  git.fetch().pull(remote, branch, (err, update) => {
+    if(err) return console.error(err);
+    console.log("Directory: ", targetDirectory);
+    console.log(update);
+    console.log();
+  });
 
-let promiseList = [];
-let directoryName = null;
-
-if (args[0]) directoryName = `${args[0]}/*/`;
-else directoryName = "*/"
-
-return exec(`ls -d ${directoryName}`)
-.then(stdout => {
-  let directoryList = stdout.split('/\n').filter(d => d.length>0)
-
-  console.log("Directory list: ");
-  for(let i=0; i<directoryList.length; i++) {
-    console.log(`  ${directoryList[i]}`);
-  }
-  console.log();
-
-  // Default is specified Directory
-  let cmdList = [`cd ${args[0]} && git fetch && git pull`];
-
-  for(let i=0; i<directoryList.length; i++) {
-    let cmd = "cd ";
-
-    cmd += directoryList[i];
-    cmd += " && git fetch && git pull";
-
-    cmdList.push(cmd);
-  }
-
-  const cmdGen = generatorFunction(cmdList);
-
-  return recursiveGenerator(cmdGen);
-})
-.catch((err, cmd) => {
-  console.error("Occured an error: ",cmd);
-  console.error(err);
 });
+
