@@ -15,6 +15,17 @@ const [
   branch="master"
 ] = process.argv.slice(2);
 
+if(!targetPath || targetPath === "--help") {
+  return console.log(`
+usage: git-puller <DirectoryName>
+
+you can run: 
+  git-puller .  # current directory
+  git-puller ../../_my_project # other directory
+  git-puller ../../_my_project origin master # git pull REMOTE BRANCH
+  `);
+}
+
 const targetDirectories = getDirectories(targetPath).concat(targetPath);
 
 targetDirectories.map((targetDirectory) => {
