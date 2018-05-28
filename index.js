@@ -16,14 +16,15 @@ const [
 ] = process.argv.slice(2);
 
 if(!targetPath || targetPath === "--help") {
-  return console.log(`
-usage: git-puller <DirectoryName>
+  const helpText = `
+usage: git-puller <DIRECTORY_NAME>
 
-you can run: 
-  git-puller .  # current directory
-  git-puller ../../_my_project # other directory
-  git-puller ../../_my_project origin master # git pull REMOTE BRANCH
-  `);
+examples: 
+  git-puller .                                # current directory
+  git-puller ../../_my_project                # other directory
+  git-puller ../../_my_project origin master  # git pull REMOTE BRANCH`
+  console.log(helpText);
+  return;
 }
 
 const targetDirectories = getDirectories(targetPath).concat(targetPath);
@@ -32,8 +33,7 @@ targetDirectories.map((targetDirectory) => {
   const git = simpleGit(targetDirectory);
   
   git.fetch().pull(remote, branch, (err, update) => {
-    if(err) return console.error(err);
-    console.log("Directory: ", targetDirectory);
+    if(err) return;
     console.log(update);
     console.log();
   });
