@@ -1,18 +1,18 @@
 # git-puller
-Git pull all repository of directory tree from specified directory or current path.
+Git pull all repository of directory tree from specified directory.
 
-# Install
+## Install
 
 Install command line interface globally.
 
 ```sh
-$ npm install -g git-puller
+$ npm i -g git-puller
 ```
 
-# Usage
+## Usage
 
 ```sh
-$ git-puller <DirectoryName>
+$ git-puller <DIRECTORY_NAME>
 
 # Example
 $ git-puller .  # current directory
@@ -20,5 +20,7 @@ $ git-puller ../../_my_project # other directory
 $ git-puller ../../_my_project origin master # git pull REMOTE BRANCH
 ```
 
-License
-[MIT licensed](./LICENSE).
+## License
+
+Provided under the terms of the [MIT license](./LICENSE)
+
