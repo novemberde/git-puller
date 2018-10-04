@@ -38,19 +38,15 @@ examples:
   const targetDirectories = getDirectories(targetPath).concat(targetPath);
 
   targetDirectories.map((targetDirectory) => {
-    if(targetDirectory === '.git') return;
-
     const git = simpleGit(targetDirectory);
     
-    git.checkIsRepo((err, result) => {
-      if(result) return;
-
-      git.fetch().pull(remote, branch, (err, update) => {
-        if (err) return;
-        console.log('\nDirectory: ', join(process.cwd(), targetDirectory));
-        if(update.files.length === 0) return console.log("lastest")
-        console.log(update);
-      });
+    // git.checkIsRepo((err, result) => {
+    // });
+    git.fetch().pull(remote, branch, (err, update) => {
+      if (err) return;
+      console.log('\nDirectory: ', join(process.cwd(), targetDirectory));
+      if(update.files.length === 0) return console.log("lastest")
+      console.log(update);
     });
   });
 })();
