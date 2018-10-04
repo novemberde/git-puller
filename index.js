@@ -17,12 +17,15 @@
 
 
   program.on('--help', function () {
-    console.log(`usage: git-puller -d <DIRECTORY_NAME>
-  
+    console.log(`
 examples: 
-  git-puller -d ./                                # Current directory
-  git-puller -d ../../_my_project                # Other directory
-  git-puller -d ./ -r origin -b master           # Specify remote and branch`);
+  git-puller -d ./                       # Current directory
+  git-puller -d ../../_my_project        # Other directory
+  git-puller -d ./ -r origin -b master   # Specify remote and branch
+
+  gp -d ./                               # Current directory
+  gp -d ../../_my_project                # Other directory
+  gp -d ./ -r origin -b master           # Specify remote and branch`);
   });
 
   const branch = program.branch;
