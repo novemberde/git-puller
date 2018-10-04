@@ -4,7 +4,8 @@
   "description": "Git pull all repository of directory tree from specified directory.",
   "main": "index.js",
   "bin": {
-    "git-puller": "./index.js"
+    "git-puller": "./index.js",
+    "gp": "./index.js"
   },
   "scripts": {
     "test": "node index.js"
