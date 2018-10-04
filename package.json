@@ -28,6 +28,7 @@
     "node": ">=6.0.0"
   },
   "dependencies": {
+    "commander": "^2.18.0",
     "simple-git": "^1.80.1"
   }
 }
