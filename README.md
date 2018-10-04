@@ -29,9 +29,9 @@ examples:
   git-puller -d ../../_my_project        # Other directory
   git-puller -d ./ -r origin -b master   # Specify remote and branch
 
-  gp -d ./                               # Current directory
-  gp -d ../../_my_project                # Other directory
-  gp -d ./ -r origin -b master           # Specify remote and branch
+  gplr -d ./                             # Current directory
+  gplr -d ../../_my_project              # Other directory
+  gplr -d ./ -r origin -b master         # Specify remote and branch
 ```
 
 ## License

@@ -1,11 +1,11 @@
 {
   "name": "git-puller",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "Git pull all repository of directory tree from specified directory.",
   "main": "index.js",
   "bin": {
     "git-puller": "./index.js",
-    "gp": "./index.js"
+    "gplr": "./index.js"
   },
   "scripts": {
     "test": "node index.js"
