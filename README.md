@@ -1,5 +1,5 @@
 # git-puller
-[![NPM version](https://badge.fury.io/js/badge-list.svg)](https://www.npmjs.com/package/git-puller)
+[![NPM version](https://badge.fury.io/js/git-puller.svg)](https://www.npmjs.com/package/git-puller)
 
 Git pull all repository of directory tree from specified directory.
 
