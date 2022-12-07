@@ -30,6 +30,6 @@
   },
   "dependencies": {
     "commander": "^2.20.3",
-    "simple-git": "^1.129.0"
+    "simple-git": "^3.15.0"
   }
 }
