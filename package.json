@@ -1,14 +1,24 @@
 {
   "name": "git-puller",
-  "version": "1.0.10",
+  "version": "2.0.0",
   "description": "Git pull all repository of directory tree from specified directory.",
-  "main": "index.js",
+  "type": "module",
+  "main": "./dist/index.js",
   "bin": {
-    "git-puller": "./index.js",
-    "gplr": "./index.js"
+    "git-puller": "./dist/index.js",
+    "gplr": "./dist/index.js"
   },
   "scripts": {
-    "test": "node index.js"
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "prepare": "husky",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -17,7 +27,9 @@
   "keywords": [
     "git",
     "pull",
-    "puller"
+    "puller",
+    "cli",
+    "typescript"
   ],
   "author": "",
   "license": "ISC",
@@ -26,10 +38,33 @@
   },
   "homepage": "https://github.com/novemberde/git-puller#readme",
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=18.0.0"
   },
   "dependencies": {
-    "commander": "^2.20.3",
-    "simple-git": "^1.129.0"
+    "chalk": "^5.6.2",
+    "cli-table3": "^0.6.5",
+    "commander": "^12.1.0",
+    "ora": "^9.0.0",
+    "simple-git": "^3.27.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "@vitest/ui": "^2.1.8",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.11",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }

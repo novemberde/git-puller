@@ -56,3 +56,24 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# TypeScript build output
+dist/
+*.tsbuildinfo
+
+# Test coverage
+coverage/
+.vitest/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Temporary test directories
+test-temp/
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
