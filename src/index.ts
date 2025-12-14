@@ -6,7 +6,14 @@ import { Command } from 'commander';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import ora from 'ora';
 import { getDirectories } from './utils.js';
+import {
+  printHeader,
+  printRepositoryResult,
+  printSummary,
+  printFooter,
+} from './ui.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -98,37 +105,59 @@ async function pullRepository(
 async function pullAllRepositories(options: PullOptions): Promise<void> {
   const { directory, remote, branch } = options;
 
+  // Print header
+  printHeader(remote, branch);
+
+  // Discover repositories
+  const spinner = ora('Scanning for repositories...').start();
   const directories = await getDirectories(directory);
   const targetDirectories = [...directories, directory];
+  spinner.succeed(`Found ${targetDirectories.length} director${targetDirectories.length !== 1 ? 'ies' : 'y'} to check`);
 
-  console.log(`\nPulling from ${remote}/${branch}...\n`);
+  console.log('');
 
+  // Pull all repositories with progress
+  const pullSpinner = ora('Pulling repositories...').start();
   const results = await Promise.all(
     targetDirectories.map((dir) => pullRepository(dir, remote, branch))
   );
+  pullSpinner.stop();
 
+  // Track statistics
+  let successful = 0;
+  let failed = 0;
+  let skipped = 0;
+
+  // Display results
   results.forEach(({ path, result, error }) => {
     const absolutePath = join(process.cwd(), path);
-    console.log(`\nDirectory: ${absolutePath}`);
 
     if (error) {
-      if (error.message !== 'Not a git repository') {
-        console.error(`Error: ${error.message}`);
+      if (error.message === 'Not a git repository') {
+        skipped++;
+        printRepositoryResult(absolutePath, true, error.message, 0, 0);
+      } else {
+        failed++;
+        printRepositoryResult(absolutePath, false, error.message);
       }
       return;
     }
 
-    if (result.files && result.files.length === 0) {
-      console.log('Already up to date');
+    const changes = result.summary?.changes || 0;
+    const filesChanged = result.files?.length || 0;
+
+    if (changes === 0) {
+      skipped++;
     } else {
-      console.log(`Updated: ${result.summary?.changes || 0} changes`);
-      if (result.files && result.files.length > 0) {
-        console.log(`Files changed: ${result.files.length}`);
-      }
+      successful++;
     }
+
+    printRepositoryResult(absolutePath, true, 'Success', changes, filesChanged);
   });
 
-  console.log('\nDone!');
+  // Print summary
+  printSummary(targetDirectories.length, successful, failed, skipped);
+  printFooter();
 }
 
 function main(): void {
