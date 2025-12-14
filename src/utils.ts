@@ -20,7 +20,9 @@ export async function getDirectories(source: string): Promise<string[]> {
         isDir: await isDirectory(path),
       }))
     );
-    return directories.filter((entry) => entry.isDir).map((entry) => entry.path);
+    return directories
+      .filter((entry) => entry.isDir)
+      .map((entry) => entry.path);
   } catch (error) {
     console.error(`Error reading directory ${source}:`, error);
     return [];

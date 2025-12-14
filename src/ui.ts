@@ -4,22 +4,16 @@ import Table from 'cli-table3';
 export const colors = {
   success: chalk.green,
   error: chalk.red,
-  warning: chalk.yellow,
   info: chalk.cyan,
   dim: chalk.dim,
   bold: chalk.bold,
-  primary: chalk.blue,
 };
 
 export const symbols = {
   success: chalk.green('✓'),
   error: chalk.red('✗'),
-  warning: chalk.yellow('⚠'),
-  info: chalk.cyan('ℹ'),
-  arrow: chalk.cyan('→'),
   dot: chalk.dim('•'),
   branch: chalk.yellow(''),
-  repo: chalk.blue(''),
 };
 
 export function printHeader(remote: string, branch: string): void {
@@ -60,7 +54,9 @@ export function printRepositoryResult(
     } else {
       console.log(
         '  ' +
-          colors.success(`Updated: ${changes} change${changes !== 1 ? 's' : ''}`)
+          colors.success(
+            `Updated: ${changes} change${changes !== 1 ? 's' : ''}`
+          )
       );
       if (filesChanged && filesChanged > 0) {
         console.log(

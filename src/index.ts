@@ -34,16 +34,11 @@ const packageJson = JSON.parse(
   readFileSync(join(__dirname, '../package.json'), 'utf-8')
 );
 
-async function detectBranch(
-  git: SimpleGit,
-  remote: string
-): Promise<string> {
+async function detectBranch(git: SimpleGit, remote: string): Promise<string> {
   try {
     // Get all remote branches
     const branches = await git.branch(['-r']);
-    const remoteBranches = branches.all.map((b) =>
-      b.replace(`${remote}/`, '')
-    );
+    const remoteBranches = branches.all.map((b) => b.replace(`${remote}/`, ''));
 
     // Check for main branch first
     if (remoteBranches.includes('main')) {
@@ -58,7 +53,7 @@ async function detectBranch(
     // Fall back to current branch
     const currentBranch = await git.revparse(['--abbrev-ref', 'HEAD']);
     return currentBranch.trim();
-  } catch (error) {
+  } catch {
     // If detection fails, fall back to current branch
     try {
       const currentBranch = await git.revparse(['--abbrev-ref', 'HEAD']);
@@ -85,7 +80,8 @@ async function pullRepository(
     await git.fetch();
 
     // Auto-detect branch if set to 'auto'
-    const targetBranch = branch === 'auto' ? await detectBranch(git, remote) : branch;
+    const targetBranch =
+      branch === 'auto' ? await detectBranch(git, remote) : branch;
 
     const result = await git.pull(remote, targetBranch);
 
@@ -112,7 +108,9 @@ async function pullAllRepositories(options: PullOptions): Promise<void> {
   const spinner = ora('Scanning for repositories...').start();
   const directories = await getDirectories(directory);
   const targetDirectories = [...directories, directory];
-  spinner.succeed(`Found ${targetDirectories.length} director${targetDirectories.length !== 1 ? 'ies' : 'y'} to check`);
+  spinner.succeed(
+    `Found ${targetDirectories.length} director${targetDirectories.length !== 1 ? 'ies' : 'y'} to check`
+  );
 
   console.log('');
 
@@ -165,22 +163,45 @@ function main(): void {
 
   program
     .name('git-puller')
-    .description('Git pull all repository of directory tree from specified directory')
+    .description(
+      '🚀 Pull all git repositories in a directory tree with smart branch detection'
+    )
     .version(packageJson.version)
-    .option('-d, --directory <path>', 'Target directory')
+    .option('-d, --directory <path>', 'Target directory (required)')
     .option('-r, --remote <name>', 'Git remote', 'origin')
-    .option('-b, --branch <name>', 'Git branch (auto-detects: main > master > current)', 'auto')
+    .option(
+      '-b, --branch <name>',
+      'Git branch (auto | main | master | custom)',
+      'auto'
+    )
     .addHelpText(
       'after',
       `
-Examples:
-  $ git-puller -d ./                       # Current directory (auto-detects branch)
-  $ git-puller -d ../../_my_project        # Other directory (auto-detects branch)
-  $ git-puller -d ./ -r origin -b main     # Specify remote and branch
+Smart Branch Detection:
+  When using default "auto" mode, git-puller will:
+    1. Check for "main" branch first
+    2. Fall back to "master" if main doesn't exist
+    3. Use current branch if neither exists
 
-  $ gplr -d ./                             # Current directory (auto-detects branch)
-  $ gplr -d ../../_my_project              # Other directory (auto-detects branch)
-  $ gplr -d ./ -r origin -b main           # Specify remote and branch
+Examples:
+  Basic Usage:
+    $ git-puller -d ./                     Pull repos in current directory
+    $ git-puller -d ~/projects             Pull all repos in projects folder
+    $ gplr -d ./                           Using short alias
+
+  Advanced:
+    $ git-puller -d ./ -b main             Force specific branch
+    $ git-puller -d ./ -r upstream         Use different remote
+    $ gplr -d ~/work -r origin -b develop  Combine options
+
+Features:
+  ✓ Auto-detects main/master branches
+  ✓ Colored output with progress indicators
+  ✓ Summary statistics table
+  ✓ Handles nested directories
+  ✓ Parallel repository pulling
+
+Need help? https://github.com/novemberde/git-puller
 `
     )
     .action(async (options) => {
